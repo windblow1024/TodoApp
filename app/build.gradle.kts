@@ -38,9 +38,8 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
 
     // Room Database
-    def room_version = "2.6.1"
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
 
     // Lifecycle (for LiveData)
     implementation("androidx.lifecycle:lifecycle-livedata:2.7.0")
