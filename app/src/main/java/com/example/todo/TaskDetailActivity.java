@@ -46,6 +46,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     private View dueDateContainer, repeatDaysContainer;
     private LinearLayout repeatDaysLayout;
     private ImageView attachmentPreview;
+    private TextView deleteAttachmentBtn;
     private Button saveButton, deleteButton, attachButton;
     private View attachmentContainer;
 
@@ -116,6 +117,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         attachmentPreview = findViewById(R.id.attachmentPreview);
         attachmentContainer = findViewById(R.id.attachmentContainer);
         attachButton = findViewById(R.id.attachButton);
+        deleteAttachmentBtn = findViewById(R.id.deleteAttachmentBtn);
         saveButton = findViewById(R.id.saveButton);
         deleteButton = findViewById(R.id.deleteButton);
 
@@ -221,6 +223,32 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         attachButton.setOnClickListener(v -> imagePickerLauncher.launch("image/*"));
 
+        // 点击附件预览放大显示
+        attachmentPreview.setOnClickListener(v -> {
+            if (attachmentPath != null && !attachmentPath.isEmpty()) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                File file = new File(attachmentPath);
+                Uri uri = Uri.fromFile(file);
+                String mimeType = "image/*";
+                intent.setDataAndType(uri, mimeType);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(this, "无法打开附件", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        // 删除附件
+        deleteAttachmentBtn.setOnClickListener(v -> {
+            attachmentPath = "";
+            attachmentType = "";
+            attachmentContainer.setVisibility(View.GONE);
+            attachmentPreview.setImageDrawable(null);
+            Toast.makeText(this, "附件已删除", Toast.LENGTH_SHORT).show();
+        });
+
         saveButton.setOnClickListener(v -> saveTask());
         deleteButton.setOnClickListener(v -> deleteTask());
     }
@@ -272,6 +300,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         if ("image".equals(attachmentType)) {
             attachmentPreview.setImageURI(Uri.fromFile(new File(attachmentPath)));
             attachmentContainer.setVisibility(View.VISIBLE);
+            deleteAttachmentBtn.setVisibility(View.VISIBLE);
         }
     }
 

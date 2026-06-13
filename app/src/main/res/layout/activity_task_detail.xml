@@ -35,12 +35,13 @@
             android:layout_marginTop="16dp" android:text="说明备注"
             android:textColor="?attr/colorOnSurface" android:textSize="13sp" />
         <EditText android:id="@+id/descInput"
-            android:layout_width="match_parent" android:layout_height="80dp"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:background="@drawable/bg_input"
             android:gravity="top"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
+            android:minLines="5"
             android:padding="16dp"
             android:textColor="?attr/colorOnSurface" android:textSize="14sp"
             android:hint="添加备注、URL 链接…" />
@@ -184,9 +185,26 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <ImageView android:id="@+id/attachmentPreview"
-                android:layout_width="200dp" android:layout_height="200dp"
-                android:scaleType="centerCrop" />
+            <LinearLayout
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView android:id="@+id/attachmentPreview"
+                    android:layout_width="match_parent" android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView android:id="@+id/deleteAttachmentBtn"
+                    android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:text="删除附件"
+                    android:textColor="#FF3B30"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Buttons -->
