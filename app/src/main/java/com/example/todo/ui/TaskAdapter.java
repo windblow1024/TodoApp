@@ -79,6 +79,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cardView);
+
+            // 整行点击进入详情
+            itemView.setOnClickListener(v -> {
+                int pos = getAdapterPosition();
+                if (pos != RecyclerView.NO_POSITION && listener != null) {
+                    listener.onItemClick(taskList.get(pos), pos);
+                }
+            });
             checkBox = itemView.findViewById(R.id.checkBox);
             titleText = itemView.findViewById(R.id.titleText);
             timeText = itemView.findViewById(R.id.timeText);
@@ -151,9 +159,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 if (listener != null) listener.onDelete(task, position);
             });
 
-            cardView.setOnClickListener(v -> {
-                if (listener != null) listener.onItemClick(task, position);
-            });
+            // 点击事件已移至 itemView
         }
 
         private void vibrate(Context ctx) {
