@@ -51,6 +51,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_task, parent, false);
+        // 确保整行可点击
+        view.setClickable(true);
+        view.setFocusable(true);
         return new TaskViewHolder(view);
     }
 
