@@ -17,7 +17,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.todo.data.TaskDao;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -155,10 +158,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadTasks() {
-        var db = TodoApplication.getInstance().getDatabase();
-        var dao = db.taskDao();
+        AppDatabase db = TodoApplication.getInstance().getDatabase();
+        TaskDao dao = db.taskDao();
 
-        var liveData = searchQuery.isEmpty()
+        LiveData<List<Task>> liveData = searchQuery.isEmpty()
                 ? (currentTab == 0 ? dao.getAllTasks()
                     : currentTab == 1 ? dao.getActiveTasks() : dao.getCompletedTasks())
                 : dao.searchTasks("%" + searchQuery + "%");
@@ -186,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
             adapter = new TaskAdapter(taskList, new TaskAdapter.OnTaskClickListener() {
                 @Override
                 public void onToggleComplete(Task task, int position) {
-                    var db = TodoApplication.getInstance().getDatabase();
+                    AppDatabase db = TodoApplication.getInstance().getDatabase();
                     new Thread(() -> {
                         task.setCompleted(!task.isCompleted());
                         if (task.isCompleted()) {
@@ -200,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onDelete(Task task, int position) {
                     pendingUndoTask = task;
-                    var db = TodoApplication.getInstance().getDatabase();
+                    AppDatabase db = TodoApplication.getInstance().getDatabase();
                     new Thread(() -> {
                         if (task.hasCalendarEvent()) {
                             com.example.todo.util.CalendarHelper.deleteEvent(MainActivity.this, task.getCalendarEventId());

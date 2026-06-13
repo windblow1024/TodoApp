@@ -1,7 +1,6 @@
 package com.example.todo;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.todo.data.AppDatabase;
 import com.example.todo.data.Task;
+import com.example.todo.data.TaskDao;
 import com.example.todo.util.ThemeUtil;
 
 import java.util.Calendar;
@@ -40,8 +40,8 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void loadStats() {
-        var db = TodoApplication.getInstance().getDatabase();
-        var dao = db.taskDao();
+        AppDatabase db = TodoApplication.getInstance().getDatabase();
+        TaskDao dao = db.taskDao();
 
         dao.getTotalCount().observe(this, total -> {
             dao.getActiveCount().observe(this, active -> {
@@ -53,11 +53,9 @@ public class DashboardActivity extends AppCompatActivity {
                     int rate = total > 0 ? (completed * 100 / total) : 0;
                     rateText.setText(rate + "%");
 
-                    // 绘制环形图
                     chartContainer.removeAllViews();
                     chartContainer.addView(new DonutChartView(this, total, completed, active));
 
-                    // 统计文本
                     StringBuilder sb = new StringBuilder();
                     sb.append("📊 统计概要\n\n");
                     sb.append("总任务: ").append(total).append("\n");
@@ -87,7 +85,6 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
-    // 自定义环形图 View
     static class DonutChartView extends android.view.View {
         private final Paint completedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         private final Paint activePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -133,13 +130,8 @@ public class DashboardActivity extends AppCompatActivity {
             float completedSweep = (float) completed / total * 360;
             float activeSweep = (float) active / total * 360;
 
-            // Background
             canvas.drawArc(rectF, 0, 360, false, bgPaint);
-
-            // Completed (green)
             canvas.drawArc(rectF, -90, completedSweep, false, completedPaint);
-
-            // Active (blue)
             canvas.drawArc(rectF, -90 + completedSweep, activeSweep, false, activePaint);
         }
     }

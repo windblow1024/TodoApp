@@ -82,7 +82,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             task = new Task();
             setTitle("新建任务");
         } else {
-            var db = TodoApplication.getInstance().getDatabase();
+            AppDatabase db = TodoApplication.getInstance().getDatabase();
             task = db.taskDao().getTaskSync(taskId);
             if (task == null) { finish(); return; }
             setTitle("编辑任务");
@@ -317,7 +317,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             task.setCalendarEventId(0);
         }
 
-        var db = TodoApplication.getInstance().getDatabase();
+        AppDatabase db = TodoApplication.getInstance().getDatabase();
         new Thread(() -> {
             if (isNewTask) {
                 db.taskDao().insert(task);
@@ -334,7 +334,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         new androidx.appcompat.app.AlertDialog.Builder(this)
                 .setMessage("确定删除「" + task.getTitle() + "」？")
                 .setPositiveButton("删除", (dialog, which) -> {
-                    var db = TodoApplication.getInstance().getDatabase();
+                    AppDatabase db = TodoApplication.getInstance().getDatabase();
                     new Thread(() -> {
                         if (task.hasCalendarEvent()) {
                             CalendarHelper.deleteEvent(this, task.getCalendarEventId());
