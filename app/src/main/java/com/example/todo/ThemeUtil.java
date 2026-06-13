@@ -2,10 +2,7 @@ package com.example.todo;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.view.View;
-
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.preference.PreferenceManager;
 
 /**
  * 主题工具类
@@ -28,8 +25,12 @@ public class ThemeUtil {
     /**
      * 应用主题设置（在 setContentView 之前调用）
      */
+    private static SharedPreferences getPrefs(Activity activity) {
+        return activity.getSharedPreferences("todo_prefs", Activity.MODE_PRIVATE);
+    }
+
     public static void applyTheme(Activity activity) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences prefs = getPrefs(activity);
 
         // 深色模式
         boolean darkMode = prefs.getBoolean(KEY_DARK_MODE, false);
@@ -41,22 +42,22 @@ public class ThemeUtil {
     }
 
     public static boolean isDarkMode(Activity activity) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences prefs = getPrefs(activity);
         return prefs.getBoolean(KEY_DARK_MODE, false);
     }
 
     public static void setDarkMode(Activity activity, boolean dark) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences prefs = getPrefs(activity);
         prefs.edit().putBoolean(KEY_DARK_MODE, dark).apply();
     }
 
     public static int getThemeColor(Activity activity) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences prefs = getPrefs(activity);
         return prefs.getInt(KEY_THEME_COLOR, THEME_BLUE);
     }
 
     public static void setThemeColor(Activity activity, int colorIndex) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences prefs = getPrefs(activity);
         prefs.edit().putInt(KEY_THEME_COLOR, colorIndex).apply();
     }
 }
