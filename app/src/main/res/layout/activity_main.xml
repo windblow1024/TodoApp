@@ -32,13 +32,13 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/sortButton"
+                android:id="@+id/dashboardButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_sort"
-                android:contentDescription="排序" />
+                android:src="@drawable/ic_dashboard"
+                android:contentDescription="统计" />
 
             <ImageButton
                 android:id="@+id/settingsButton"
@@ -90,37 +90,6 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <!-- Stats Bar -->
-        <LinearLayout
-            android:id="@+id/statsContainer"
-            android:layout_width="0dp"
-            android:layout_height="36dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/searchBar">
-
-            <ProgressBar
-                android:id="@+id/statsBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
-                android:layout_height="8dp"
-                android:layout_weight="1"
-                android:max="100"
-                android:progressTint="@color/colorPrimary" />
-
-            <TextView
-                android:id="@+id/statsText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="12sp" />
-        </LinearLayout>
-
         <!-- Tab Bar -->
         <LinearLayout
             android:id="@+id/tabBar"
@@ -131,7 +100,7 @@
             android:background="?attr/colorSurface"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/statsContainer">
+            app:layout_constraintTop_toBottomOf="@id/searchBar">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -139,21 +108,11 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tabAll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/tab_all"
-                    android:textSize="15sp" />
-
-                <View
-                    android:id="@+id/indicatorAll"
-                    android:layout_width="24dp"
-                    android:layout_height="3dp"
-                    android:background="@color/colorPrimary"
+                <TextView android:id="@+id/tabAll" android:layout_width="wrap_content"
+                    android:layout_height="0dp" android:layout_weight="1" android:gravity="center"
+                    android:text="@string/tab_all" android:textSize="15sp" />
+                <View android:id="@+id/indicatorAll" android:layout_width="24dp"
+                    android:layout_height="3dp" android:background="@color/colorPrimary"
                     android:visibility="visible" />
             </LinearLayout>
 
@@ -163,21 +122,11 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tabActive"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/tab_active"
-                    android:textSize="15sp" />
-
-                <View
-                    android:id="@+id/indicatorActive"
-                    android:layout_width="24dp"
-                    android:layout_height="3dp"
-                    android:background="@color/colorPrimary"
+                <TextView android:id="@+id/tabActive" android:layout_width="wrap_content"
+                    android:layout_height="0dp" android:layout_weight="1" android:gravity="center"
+                    android:text="@string/tab_active" android:textSize="15sp" />
+                <View android:id="@+id/indicatorActive" android:layout_width="24dp"
+                    android:layout_height="3dp" android:background="@color/colorPrimary"
                     android:visibility="invisible" />
             </LinearLayout>
 
@@ -187,29 +136,17 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tabCompleted"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/tab_completed"
-                    android:textSize="15sp" />
-
-                <View
-                    android:id="@+id/indicatorCompleted"
-                    android:layout_width="24dp"
-                    android:layout_height="3dp"
-                    android:background="@color/colorPrimary"
+                <TextView android:id="@+id/tabCompleted" android:layout_width="wrap_content"
+                    android:layout_height="0dp" android:layout_weight="1" android:gravity="center"
+                    android:text="@string/tab_completed" android:textSize="15sp" />
+                <View android:id="@+id/indicatorCompleted" android:layout_width="24dp"
+                    android:layout_height="3dp" android:background="@color/colorPrimary"
                     android:visibility="invisible" />
             </LinearLayout>
         </LinearLayout>
 
         <!-- Separator -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1px"
+        <View android:layout_width="0dp" android:layout_height="1px"
             android:background="@color/divider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -218,34 +155,25 @@
         <!-- Empty View -->
         <LinearLayout
             android:id="@+id/emptyView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:orientation="vertical"
+            android:layout_width="0dp" android:layout_height="0dp"
+            android:gravity="center" android:orientation="vertical"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tabBar">
-
-            <TextView
-                android:id="@+id/emptyText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:lineSpacingExtra="8dp"
-                android:textColor="?attr/colorOnSurface"
+            <TextView android:id="@+id/emptyText" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:gravity="center"
+                android:lineSpacingExtra="8dp" android:textColor="?attr/colorOnSurface"
                 android:textSize="16sp" />
         </LinearLayout>
 
         <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="0dp" android:layout_height="0dp"
             android:clipToPadding="false"
-            android:paddingTop="4dp"
-            android:paddingBottom="80dp"
+            android:paddingTop="4dp" android:paddingBottom="80dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -256,13 +184,10 @@
     <!-- FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="20dp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom" android:layout_margin="20dp"
         android:contentDescription="添加"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@color/colorPrimary"
-        app:tint="@android:color/white" />
+        app:backgroundTint="@color/colorPrimary" app:tint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
