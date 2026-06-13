@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#007AFF</color>
+    <color name="colorPrimaryDark">#0066D6</color>
+    <color name="colorAccent">#FF9500</color>
+    <color name="backgroundLight">#F2F2F7</color>
+    <color name="cardBackground">#FFFFFF</color>
+    <color name="textPrimary">#1C1C1E</color>
+    <color name="textSecondary">#8E8E93</color>
+    <color name="completedText">#C7C7CC</color>
+    <color name="divider">#E5E5EA</color>
+    <color name="checkboxTint">#007AFF</color>
+    <color name="deleteRed">#FF3B30</color>
+</resources>
