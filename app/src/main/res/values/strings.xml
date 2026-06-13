@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">待办事项</string>
+    <string name="tab_all">全部</string>
+    <string name="tab_active">待办</string>
+    <string name="tab_completed">已完成</string>
+    <string name="empty_all">还没有待办事项\n点击 + 添加</string>
+    <string name="empty_active">没有待办事项 🎉</string>
+    <string name="empty_completed">还没有已完成的任务</string>
+    <string name="add_task_hint">输入待办事项…</string>
+    <string name="confirm_add">添加</string>
+    <string name="cancel">取消</string>
+    <string name="delete_confirm">确定删除？</string>
+    <string name="delete">删除</string>
+</resources>
