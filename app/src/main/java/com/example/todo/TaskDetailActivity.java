@@ -223,19 +223,22 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         attachButton.setOnClickListener(v -> imagePickerLauncher.launch("image/*"));
 
-        // 点击附件预览放大显示
+        // 点击附件预览放大显示 (使用 FileProvider)
         attachmentPreview.setOnClickListener(v -> {
             if (attachmentPath != null && !attachmentPath.isEmpty()) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 File file = new File(attachmentPath);
-                Uri uri = Uri.fromFile(file);
+                Uri uri = androidx.core.content.FileProvider.getUriForFile(
+                        this,
+                        getPackageName() + ".fileprovider",
+                        file);
                 String mimeType = "image/*";
                 intent.setDataAndType(uri, mimeType);
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 try {
                     startActivity(intent);
                 } catch (Exception e) {
-                    Toast.makeText(this, "无法打开附件", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "无法打开附件: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -298,9 +301,16 @@ public class TaskDetailActivity extends AppCompatActivity {
 
     private void showAttachmentPreview() {
         if ("image".equals(attachmentType)) {
-            attachmentPreview.setImageURI(Uri.fromFile(new File(attachmentPath)));
-            attachmentContainer.setVisibility(View.VISIBLE);
-            deleteAttachmentBtn.setVisibility(View.VISIBLE);
+            File file = new File(attachmentPath);
+            if (file.exists()) {
+                Uri uri = androidx.core.content.FileProvider.getUriForFile(
+                        this,
+                        getPackageName() + ".fileprovider",
+                        file);
+                attachmentPreview.setImageURI(uri);
+                attachmentContainer.setVisibility(View.VISIBLE);
+                deleteAttachmentBtn.setVisibility(View.VISIBLE);
+            }
         }
     }
 
