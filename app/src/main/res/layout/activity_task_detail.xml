@@ -87,18 +87,12 @@
             <RadioButton android:id="@+id/statusPlanned" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:text="计划中" android:textColor="?attr/colorOnSurface" />
-        </RadioGroup>
-
-        <RadioGroup
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal">
             <RadioButton android:id="@+id/statusBlocked" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:text="阻塞" android:textColor="?attr/colorOnSurface" />
             <RadioButton android:id="@+id/statusDone" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:text="已完成" android:textColor="?attr/colorOnSurface" />
-            <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1" />
         </RadioGroup>
 
         <!-- Category -->

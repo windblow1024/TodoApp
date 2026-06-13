@@ -29,6 +29,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             "todo_v3.db"
                     )
                     .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .build();
                 }
             }
