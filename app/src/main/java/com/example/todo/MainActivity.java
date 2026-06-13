@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int currentTab = 0;
     private String searchQuery = "";
+    private String currentSort = "created";
     private Task pendingUndoTask = null;
 
     private final ActivityResultLauncher<String> requestCalendarPermission =
