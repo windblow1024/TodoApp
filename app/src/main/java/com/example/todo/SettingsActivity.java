@@ -2,12 +2,10 @@ package com.example.todo;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
 /**
  * 设置界面 — 深色模式 + 主题色
@@ -27,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
         themeGroup = findViewById(R.id.themeGroup);
 
         // 加载当前设置
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences prefs = getSharedPreferences("todo_prefs", MODE_PRIVATE);
         darkModeSwitch.setChecked(prefs.getBoolean("dark_mode", false));
         int currentTheme = prefs.getInt("theme_color", ThemeUtil.THEME_BLUE);
         switch (currentTheme) {
