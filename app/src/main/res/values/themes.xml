@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Custom attributes for our theme -->
+    <attr name="colorBackground" format="color" />
+    <attr name="colorSurface" format="color" />
+    <attr name="colorOnSurface" format="color" />
+
     <style name="Theme.TodoApp" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -11,19 +16,6 @@
         <item name="android:statusBarColor">@android:color/white</item>
         <item name="android:navigationBarColor">@android:color/white</item>
         <item name="android:windowLightStatusBar">true</item>
-    </style>
-
-    <style name="Theme.TodoApp.Dark" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@android:color/white</item>
-        <item name="colorSecondary">@color/colorAccent</item>
-        <item name="colorBackground">#1C1C1E</item>
-        <item name="colorSurface">#2C2C2E</item>
-        <item name="colorOnSurface">@android:color/white</item>
-        <item name="android:statusBarColor">#1C1C1E</item>
-        <item name="android:navigationBarColor">#1C1C1E</item>
-        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="DialogStyle" parent="Theme.MaterialComponents.Light.Dialog.MinWidth">
