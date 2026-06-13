@@ -63,7 +63,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         TextView titleText;
         TextView timeText;
         ImageButton deleteButton;
-        View divider;
 
         TaskViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,7 +70,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             titleText = itemView.findViewById(R.id.titleText);
             timeText = itemView.findViewById(R.id.timeText);
             deleteButton = itemView.findViewById(R.id.deleteButton);
-            divider = itemView.findViewById(R.id.divider);
         }
 
         void bind(final Task task, final int position) {
@@ -87,8 +85,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 timeText.setAlpha(0.6f);
             }
 
-            // 最后一项不显示分割线
-            divider.setVisibility(position == taskList.size() - 1 ? View.GONE : View.VISIBLE);
 
             checkBox.setOnClickListener(v -> {
                 if (listener != null) {
