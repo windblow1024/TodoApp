@@ -7,9 +7,8 @@ import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * 设置界面 — 深色模式 + 主题色
- */
+import com.example.todo.util.ThemeUtil;
+
 public class SettingsActivity extends AppCompatActivity {
 
     private Switch darkModeSwitch;
@@ -23,10 +22,11 @@ public class SettingsActivity extends AppCompatActivity {
 
         darkModeSwitch = findViewById(R.id.darkModeSwitch);
         themeGroup = findViewById(R.id.themeGroup);
+        findViewById(R.id.backButton).setOnClickListener(v -> finish());
 
-        // 加载当前设置
         SharedPreferences prefs = getSharedPreferences("todo_prefs", MODE_PRIVATE);
         darkModeSwitch.setChecked(prefs.getBoolean("dark_mode", false));
+
         int currentTheme = prefs.getInt("theme_color", ThemeUtil.THEME_BLUE);
         switch (currentTheme) {
             case ThemeUtil.THEME_GREEN: themeGroup.check(R.id.radioGreen); break;
@@ -35,11 +35,8 @@ public class SettingsActivity extends AppCompatActivity {
             default: themeGroup.check(R.id.radioBlue); break;
         }
 
-        findViewById(R.id.backButton).setOnClickListener(v -> finish());
-
         darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             ThemeUtil.setDarkMode(this, isChecked);
-            // 需要重启 Activity 才能生效
             recreate();
         });
 
@@ -49,7 +46,6 @@ public class SettingsActivity extends AppCompatActivity {
             else if (checkedId == R.id.radioPurple) color = ThemeUtil.THEME_PURPLE;
             else if (checkedId == R.id.radioOrange) color = ThemeUtil.THEME_ORANGE;
             else color = ThemeUtil.THEME_BLUE;
-
             ThemeUtil.setThemeColor(this, color);
             recreate();
         });
