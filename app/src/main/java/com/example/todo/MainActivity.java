@@ -226,9 +226,13 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemClick(Task task, int position) {
-                    Intent intent = new Intent(MainActivity.this, TaskDetailActivity.class);
-                    intent.putExtra("task_id", task.getId());
-                    startActivity(intent);
+                    try {
+                        Intent intent = new Intent(MainActivity.this, TaskDetailActivity.class);
+                        intent.putExtra("task_id", task.getId());
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "打开详情失败: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 }
             });
             recyclerView.setAdapter(adapter);

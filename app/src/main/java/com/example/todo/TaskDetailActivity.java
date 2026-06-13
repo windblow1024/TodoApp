@@ -68,29 +68,36 @@ public class TaskDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ThemeUtil.applyTheme(this);
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_detail);
+        try {
+            ThemeUtil.applyTheme(this);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_task_detail);
 
-        int taskId = getIntent().getIntExtra("task_id", -1);
-        isNewTask = taskId <= 0;
+            int taskId = getIntent().getIntExtra("task_id", -1);
+            isNewTask = taskId <= 0;
 
-        initViews();
-        setupCategorySpinner();
-        setupRepeatSpinner();
+            initViews();
+            setupCategorySpinner();
+            setupRepeatSpinner();
 
-        if (isNewTask) {
-            task = new Task();
-            setTitle("新建任务");
-        } else {
-            AppDatabase db = TodoApplication.getInstance().getDatabase();
-            task = db.taskDao().getTaskSync(taskId);
-            if (task == null) { finish(); return; }
-            setTitle("编辑任务");
-            loadTaskData();
+            if (isNewTask) {
+                task = new Task();
+            } else {
+                AppDatabase db = TodoApplication.getInstance().getDatabase();
+                task = db.taskDao().getTaskSync(taskId);
+                if (task == null) {
+                    Toast.makeText(this, "任务不存在 (ID=" + taskId + ")", Toast.LENGTH_LONG).show();
+                    finish();
+                    return;
+                }
+                loadTaskData();
+            }
+
+            setupListeners();
+        } catch (Exception e) {
+            Toast.makeText(this, "打开详情失败: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            finish();
         }
-
-        setupListeners();
     }
 
     private void initViews() {
