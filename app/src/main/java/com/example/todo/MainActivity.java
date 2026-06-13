@@ -162,10 +162,25 @@ public class MainActivity extends AppCompatActivity {
         AppDatabase db = TodoApplication.getInstance().getDatabase();
         TaskDao dao = db.taskDao();
 
-        LiveData<List<Task>> liveData = searchQuery.isEmpty()
-                ? (currentTab == 0 ? dao.getAllTasks()
-                    : currentTab == 1 ? dao.getActiveTasks() : dao.getCompletedTasks())
-                : dao.searchTasks("%" + searchQuery + "%");
+        LiveData<List<Task>> liveData;
+        if (!searchQuery.isEmpty()) {
+            liveData = dao.searchTasks("%" + searchQuery + "%");
+        } else {
+            switch (currentSort) {
+                case "due":
+                    liveData = currentTab == 0 ? dao.getAllTasksSortedByDueDate()
+                            : currentTab == 1 ? dao.getActiveTasksSortedByDueDate() : dao.getCompletedTasks();
+                    break;
+                case "priority":
+                    liveData = currentTab == 0 ? dao.getAllTasksSortedByPriority()
+                            : currentTab == 1 ? dao.getActiveTasks() : dao.getCompletedTasks();
+                    break;
+                default:
+                    liveData = currentTab == 0 ? dao.getAllTasks()
+                            : currentTab == 1 ? dao.getActiveTasks() : dao.getCompletedTasks();
+                    break;
+            }
+        }
 
         liveData.observe(this, tasks -> {
             taskList = tasks;
