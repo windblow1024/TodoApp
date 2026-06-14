@@ -17,9 +17,9 @@ android {
     signingConfigs {
         create("release") {
             storeFile = rootProject.file("release.keystore")
-            storePassword = providers.environmentVariable("KEY_STORE_PASSWORD").orElse("Tg2y+C=.").get()
+            storePassword = providers.environmentVariable("KEY_STORE_PASSWORD").get()
             keyAlias = "TodoApp"
-            keyPassword = providers.environmentVariable("KEY_PASSWORD").orElse("Tg2y+C=.").get()
+            keyPassword = providers.environmentVariable("KEY_PASSWORD").get()
         }
     }
 
