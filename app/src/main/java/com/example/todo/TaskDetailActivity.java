@@ -57,7 +57,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     private String attachmentPath = "";
     private String attachmentType = "";
 
-    private int priorityMode = ThemeUtil.PRIORITY_MODE_EISENHOWER;
+    private int priorityMode = ThemeUtil.PRIORITY_MODE_SIMPLE;
     private boolean isNewTask = true;
 
     private final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
