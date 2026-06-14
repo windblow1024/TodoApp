@@ -106,7 +106,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             Context ctx = itemView.getContext();
             checkBox.setChecked(task.isCompleted());
             titleText.setText(task.getTitle());
-            timeText.setText(dateFormat.format(new Date(task.getCreatedAt())));
+
 
             // Priority badge
             switch (task.getPriority()) {
@@ -160,7 +160,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             // Completed style
             float alpha = task.isCompleted() ? 0.4f : 1.0f;
             titleText.setAlpha(alpha);
-            timeText.setAlpha(alpha * 0.6f);
 
             // Checkbox click
             checkBox.setOnClickListener(v -> {
