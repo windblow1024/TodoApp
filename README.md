@@ -171,6 +171,11 @@ TodoApp/
 | v3.8 | 说明备注默认3行 |
 | v3.9 | 修复日历同步问题，增加详细错误反馈，MIUI 兼容 |
 | v4.0 | 新增开始日期，去除重复提醒设置 |
+| v4.1 | 新增开始时间/截止时间/优先级排序 |
+| v4.2 | 🔄 排序方式更新：按开始时间/按截止时间/按优先级
+🔄 TaskDao 新增 getAllTasksSortedByStartDate() 和 getActiveTasksSortedByStartDate()
+🛑 截止时间校验：设置截止时间不能早于开始时间
+📝 README 排序说明同步更新 |
 
 ## 构建与下载
 

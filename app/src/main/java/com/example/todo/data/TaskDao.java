@@ -44,17 +44,26 @@ public interface TaskDao {
     @Query("SELECT * FROM tasks ORDER BY priority DESC, created_at DESC")
     LiveData<List<Task>> getAllTasksSortedByPriority();
 
+    @Query("SELECT * FROM tasks WHERE completed = 1 ORDER BY priority DESC, created_at DESC")
+    LiveData<List<Task>> getCompletedTasksSortedByPriority();
+
     @Query("SELECT * FROM tasks ORDER BY start_date ASC")
     LiveData<List<Task>> getAllTasksSortedByStartDate();
 
     @Query("SELECT * FROM tasks WHERE completed = 0 ORDER BY start_date ASC")
     LiveData<List<Task>> getActiveTasksSortedByStartDate();
 
+    @Query("SELECT * FROM tasks WHERE completed = 1 ORDER BY start_date ASC")
+    LiveData<List<Task>> getCompletedTasksSortedByStartDate();
+
     @Query("SELECT * FROM tasks ORDER BY due_date ASC")
     LiveData<List<Task>> getAllTasksSortedByDueDate();
 
     @Query("SELECT * FROM tasks WHERE completed = 0 ORDER BY due_date ASC")
     LiveData<List<Task>> getActiveTasksSortedByDueDate();
+
+    @Query("SELECT * FROM tasks WHERE completed = 1 ORDER BY due_date ASC")
+    LiveData<List<Task>> getCompletedTasksSortedByDueDate();
 
     // 统计查询
     @Query("SELECT COUNT(*) FROM tasks")

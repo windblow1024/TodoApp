@@ -194,15 +194,15 @@ public class MainActivity extends AppCompatActivity {
             switch (currentSort) {
                 case "start":
                     liveData = currentTab == 0 ? dao.getAllTasksSortedByStartDate()
-                            : currentTab == 1 ? dao.getActiveTasksSortedByStartDate() : dao.getCompletedTasks();
+                            : currentTab == 1 ? dao.getActiveTasksSortedByStartDate() : dao.getCompletedTasksSortedByStartDate();
                     break;
                 case "due":
                     liveData = currentTab == 0 ? dao.getAllTasksSortedByDueDate()
-                            : currentTab == 1 ? dao.getActiveTasksSortedByDueDate() : dao.getCompletedTasks();
+                            : currentTab == 1 ? dao.getActiveTasksSortedByDueDate() : dao.getCompletedTasksSortedByDueDate();
                     break;
                 case "priority":
                     liveData = currentTab == 0 ? dao.getAllTasksSortedByPriority()
-                            : currentTab == 1 ? dao.getActiveTasks() : dao.getCompletedTasks();
+                            : currentTab == 1 ? dao.getActiveTasks() : dao.getCompletedTasksSortedByPriority();
                     break;
                 default:
                     liveData = currentTab == 0 ? dao.getAllTasks()
