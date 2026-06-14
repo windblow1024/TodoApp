@@ -76,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
         setupObservers();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadTasks();
+    }
+
     private void initViews() {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
