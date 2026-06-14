@@ -51,7 +51,7 @@ public class ThemeUtil {
     }
 
     public static int getPriorityMode(Activity activity) {
-        return getPrefs(activity).getInt(KEY_PRIORITY_MODE, PRIORITY_MODE_EISENHOWER);
+        return getPrefs(activity).getInt(KEY_PRIORITY_MODE, PRIORITY_MODE_SIMPLE);
     }
 
     public static void setPriorityMode(Activity activity, int mode) {

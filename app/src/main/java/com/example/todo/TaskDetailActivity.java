@@ -47,6 +47,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     private ImageView attachmentPreview;
     private TextView deleteAttachmentBtn;
     private Button saveButton, deleteButton, attachButton;
+    private LinearLayout buttonContainer;
     private View attachmentContainer;
 
     private Task task;
@@ -57,7 +58,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     private String attachmentPath = "";
     private String attachmentType = "";
 
-    private int priorityMode = ThemeUtil.PRIORITY_MODE_EISENHOWER;
+    private int priorityMode = ThemeUtil.PRIORITY_MODE_SIMPLE;
     private boolean isNewTask = true;
 
     private final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
@@ -128,6 +129,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         deleteAttachmentBtn = findViewById(R.id.deleteAttachmentBtn);
         saveButton = findViewById(R.id.saveButton);
         deleteButton = findViewById(R.id.deleteButton);
+        buttonContainer = findViewById(R.id.buttonContainer);
 
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
@@ -212,7 +214,16 @@ public class TaskDetailActivity extends AppCompatActivity {
             showAttachmentPreview();
         }
 
+        // 编辑时：删除按钮可见，两个按钮 weight 均分
         deleteButton.setVisibility(View.VISIBLE);
+        LinearLayout.LayoutParams delParams = (LinearLayout.LayoutParams) deleteButton.getLayoutParams();
+        delParams.width = 0;
+        delParams.weight = 1;
+        deleteButton.setLayoutParams(delParams);
+        LinearLayout.LayoutParams saveParams = (LinearLayout.LayoutParams) saveButton.getLayoutParams();
+        saveParams.width = 0;
+        saveParams.weight = 1;
+        saveButton.setLayoutParams(saveParams);
     }
 
     private void setupListeners() {

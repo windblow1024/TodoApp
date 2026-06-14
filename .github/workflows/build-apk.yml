@@ -29,13 +29,13 @@ jobs:
         run: gradle wrapper --gradle-version=8.5
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleRelease
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: todo-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: todo-release-apk
+          path: app/build/outputs/apk/release/*.apk
           if-no-files-found: error
 
       - name: Get version
@@ -51,5 +51,5 @@ jobs:
             ## TodoApp 自动构建
             
             最新 APK 已附加到本 Release。
-          files: app/build/outputs/apk/debug/*.apk
+          files: app/build/outputs/apk/release/*.apk
           make_latest: true
