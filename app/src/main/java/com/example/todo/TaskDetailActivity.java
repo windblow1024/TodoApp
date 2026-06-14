@@ -81,6 +81,9 @@ public class TaskDetailActivity extends AppCompatActivity {
 
             initViews();
 
+            // 新建时隐藏删除按钮，保存按钮占满宽度
+            updateSaveButtonWidth(isNewTask);
+
             // 读取优先级模式
             priorityMode = ThemeUtil.getPriorityMode(this);
             applyPriorityMode();
@@ -213,6 +216,19 @@ public class TaskDetailActivity extends AppCompatActivity {
         }
 
         deleteButton.setVisibility(View.VISIBLE);
+    }
+
+    private void updateSaveButtonWidth(boolean hideDelete) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) saveButton.getLayoutParams();
+        if (hideDelete) {
+            params.width = LinearLayout.LayoutParams.MATCH_PARENT;
+            params.weight = 0;
+        } else {
+            params.width = 0;
+            params.weight = 1;
+        }
+        saveButton.setLayoutParams(params);
+        deleteButton.setVisibility(hideDelete ? View.GONE : View.VISIBLE);
     }
 
     private void setupListeners() {
