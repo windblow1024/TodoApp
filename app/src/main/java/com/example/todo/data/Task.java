@@ -58,14 +58,11 @@ public class Task {
     @ColumnInfo(name = "created_at")
     private long createdAt;
 
+    @ColumnInfo(name = "start_date")
+    private long startDate;
+
     @ColumnInfo(name = "due_date")
     private long dueDate;
-
-    @ColumnInfo(name = "repeat_type")
-    private String repeatType;
-
-    @ColumnInfo(name = "repeat_days")
-    private String repeatDays;
 
     @ColumnInfo(name = "calendar_event_id")
     private long calendarEventId;
@@ -87,9 +84,8 @@ public class Task {
         this.status = STATUS_TODO;
         this.completed = false;
         this.createdAt = System.currentTimeMillis();
+        this.startDate = 0;
         this.dueDate = 0;
-        this.repeatType = REPEAT_NONE;
-        this.repeatDays = "";
         this.calendarEventId = 0;
         this.attachmentPath = "";
         this.attachmentType = "";
@@ -124,14 +120,11 @@ public class Task {
     public long getCreatedAt() { return createdAt; }
     public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
 
+    public long getStartDate() { return startDate; }
+    public void setStartDate(long startDate) { this.startDate = startDate; }
+
     public long getDueDate() { return dueDate; }
     public void setDueDate(long dueDate) { this.dueDate = dueDate; }
-
-    public String getRepeatType() { return repeatType; }
-    public void setRepeatType(String repeatType) { this.repeatType = repeatType; }
-
-    public String getRepeatDays() { return repeatDays; }
-    public void setRepeatDays(String repeatDays) { this.repeatDays = repeatDays; }
 
     public long getCalendarEventId() { return calendarEventId; }
     public void setCalendarEventId(long calendarEventId) { this.calendarEventId = calendarEventId; }
@@ -144,6 +137,7 @@ public class Task {
 
     // ===== 辅助方法 =====
 
+    public boolean hasStartDate() { return startDate > 0; }
     public boolean hasDueDate() { return dueDate > 0; }
     public boolean hasCalendarEvent() { return calendarEventId > 0; }
     public boolean hasAttachment() { return attachmentPath != null && !attachmentPath.isEmpty(); }

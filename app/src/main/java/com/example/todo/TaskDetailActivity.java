@@ -40,11 +40,10 @@ public class TaskDetailActivity extends AppCompatActivity {
 
     private EditText titleInput, descInput, customTagInput;
     private RadioGroup priorityGroup, statusGroup;
-    private TextView dueDateText;
+    private TextView startDateText, dueDateText;
     private CheckBox syncCalendarCheck;
-    private Spinner categorySpinner, repeatSpinner;
-    private View dueDateContainer, repeatDaysContainer;
-    private LinearLayout repeatDaysLayout;
+    private Spinner categorySpinner;
+    private View startDateContainer, dueDateContainer;
     private ImageView attachmentPreview;
     private TextView deleteAttachmentBtn;
     private Button saveButton, deleteButton, attachButton;
@@ -52,9 +51,9 @@ public class TaskDetailActivity extends AppCompatActivity {
 
     private Task task;
     private boolean isNewTask = true;
+    private long selectedStartDate = 0;
     private long selectedDueDate = 0;
     private boolean syncToCalendar = false;
-    private String repeatType = Task.REPEAT_NONE;
     private String attachmentPath = "";
     private String attachmentType = "";
 
@@ -79,7 +78,6 @@ public class TaskDetailActivity extends AppCompatActivity {
 
             initViews();
             setupCategorySpinner();
-            setupRepeatSpinner();
 
             if (isNewTask) {
                 task = new Task();
@@ -107,13 +105,12 @@ public class TaskDetailActivity extends AppCompatActivity {
         customTagInput = findViewById(R.id.customTagInput);
         priorityGroup = findViewById(R.id.priorityGroup);
         statusGroup = findViewById(R.id.statusGroup);
+        startDateText = findViewById(R.id.startDateText);
+        startDateContainer = findViewById(R.id.startDateContainer);
         dueDateText = findViewById(R.id.dueDateText);
         dueDateContainer = findViewById(R.id.dueDateContainer);
         syncCalendarCheck = findViewById(R.id.syncCalendarCheck);
         categorySpinner = findViewById(R.id.categorySpinner);
-        repeatSpinner = findViewById(R.id.repeatSpinner);
-        repeatDaysContainer = findViewById(R.id.repeatDaysContainer);
-        repeatDaysLayout = findViewById(R.id.repeatDaysLayout);
         attachmentPreview = findViewById(R.id.attachmentPreview);
         attachmentContainer = findViewById(R.id.attachmentContainer);
         attachButton = findViewById(R.id.attachButton);
@@ -128,12 +125,6 @@ public class TaskDetailActivity extends AppCompatActivity {
         String[] categories = {"工作", "个人", "学习", "健身", "其他", "自定义"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categories);
         categorySpinner.setAdapter(adapter);
-    }
-
-    private void setupRepeatSpinner() {
-        String[] repeats = {"不重复", "每天", "每周", "每月", "自定义"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, repeats);
-        repeatSpinner.setAdapter(adapter);
     }
 
     private void loadTaskData() {
@@ -172,19 +163,16 @@ public class TaskDetailActivity extends AppCompatActivity {
             customTagInput.setVisibility(View.VISIBLE);
         }
 
+        // Start date
+        if (task.hasStartDate()) {
+            selectedStartDate = task.getStartDate();
+            startDateText.setText(dateTimeFormat.format(selectedStartDate));
+        }
+
         // Due date
         if (task.hasDueDate()) {
             selectedDueDate = task.getDueDate();
             dueDateText.setText(dateTimeFormat.format(selectedDueDate));
-        }
-
-        // Repeat
-        String[] repeatValues = {Task.REPEAT_NONE, Task.REPEAT_DAILY, Task.REPEAT_WEEKLY, Task.REPEAT_MONTHLY, Task.REPEAT_CUSTOM};
-        for (int i = 0; i < repeatValues.length; i++) {
-            if (repeatValues[i].equals(task.getRepeatType())) {
-                repeatSpinner.setSelection(i);
-                break;
-            }
         }
 
         syncToCalendar = task.hasCalendarEvent();
@@ -201,22 +189,13 @@ public class TaskDetailActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        dueDateContainer.setOnClickListener(v -> showDateTimePicker());
+        startDateContainer.setOnClickListener(v -> showStartDateTimePicker());
+        dueDateContainer.setOnClickListener(v -> showDueDateTimePicker());
 
         categorySpinner.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {
                 customTagInput.setVisibility(position == 5 ? View.VISIBLE : View.GONE);
-            }
-            @Override public void onNothingSelected(android.widget.AdapterView<?> parent) {}
-        });
-
-        repeatSpinner.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(android.widget.AdapterView<?> parent, View view, int position, long id) {
-                repeatDaysContainer.setVisibility(position == 4 ? View.VISIBLE : View.GONE);
-                String[] repeatValues = {Task.REPEAT_NONE, Task.REPEAT_DAILY, Task.REPEAT_WEEKLY, Task.REPEAT_MONTHLY, Task.REPEAT_CUSTOM};
-                repeatType = repeatValues[position];
             }
             @Override public void onNothingSelected(android.widget.AdapterView<?> parent) {}
         });
@@ -256,7 +235,26 @@ public class TaskDetailActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(v -> deleteTask());
     }
 
-    private void showDateTimePicker() {
+    private void showStartDateTimePicker() {
+        Calendar cal = Calendar.getInstance();
+        if (selectedStartDate > 0) cal.setTimeInMillis(selectedStartDate);
+
+        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, month);
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            new TimePickerDialog(this, (view1, hourOfDay, minute) -> {
+                cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                cal.set(Calendar.MINUTE, minute);
+                cal.set(Calendar.SECOND, 0);
+                selectedStartDate = cal.getTimeInMillis();
+                startDateText.setText(dateTimeFormat.format(selectedStartDate));
+            }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show();
+        }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void showDueDateTimePicker() {
         Calendar cal = Calendar.getInstance();
         if (selectedDueDate > 0) cal.setTimeInMillis(selectedDueDate);
 
@@ -345,11 +343,11 @@ public class TaskDetailActivity extends AppCompatActivity {
         task.setCategory(catValues[catPos]);
         task.setCustomTag(catPos == 5 ? customTagInput.getText().toString().trim() : "");
 
+        // Start date
+        task.setStartDate(selectedStartDate);
+
         // Due date
         task.setDueDate(selectedDueDate);
-
-        // Repeat
-        task.setRepeatType(repeatType);
 
         // Attachment
         task.setAttachmentPath(attachmentPath);
