@@ -161,7 +161,7 @@ public class CalendarHelper {
             values.put(CalendarContract.Events.TITLE, title);
             values.put(CalendarContract.Events.DESCRIPTION, "来自待办事项 App");
             values.put(CalendarContract.Events.CALENDAR_ID, calId);
-            values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, "Asia/Shanghai");
             values.put(CalendarContract.Events.ALL_DAY, 0);
             values.put(CalendarContract.Events.STATUS, CalendarContract.Events.STATUS_CONFIRMED);
 
@@ -202,7 +202,7 @@ public class CalendarHelper {
             values.put(CalendarContract.Events.DTSTART, dueDateMillis);
             values.put(CalendarContract.Events.DTEND, dueDateMillis + 3600000);
             values.put(CalendarContract.Events.TITLE, title);
-            values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, "Asia/Shanghai");
 
             Uri uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId);
             int rows = cr.update(uri, values, null, null);
