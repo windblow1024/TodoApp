@@ -72,7 +72,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         CardView cardView;
         CheckBox checkBox;
         TextView titleText;
-        TextView timeText;
         TextView priorityBadge;
         TextView categoryBadge;
         TextView startDateText;
@@ -93,7 +92,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             });
             checkBox = itemView.findViewById(R.id.checkBox);
             titleText = itemView.findViewById(R.id.titleText);
-            timeText = itemView.findViewById(R.id.timeText);
             priorityBadge = itemView.findViewById(R.id.priorityBadge);
             startDateText = itemView.findViewById(R.id.startDateText);
             categoryBadge = itemView.findViewById(R.id.categoryBadge);
