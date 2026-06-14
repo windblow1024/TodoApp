@@ -120,6 +120,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     priorityBadge.setText("P2 紧急");
                     priorityBadge.setBackgroundColor(ContextCompat.getColor(ctx, android.R.color.holo_blue_dark));
                     break;
+                case Task.PRIORITY_HIGH:
+                    priorityBadge.setText("高");
+                    priorityBadge.setBackgroundColor(0xFFFF3B30);
+                    break;
+                case Task.PRIORITY_MEDIUM:
+                    priorityBadge.setText("中");
+                    priorityBadge.setBackgroundColor(0xFFFF9500);
+                    break;
+                case Task.PRIORITY_LOW:
+                    priorityBadge.setText("低");
+                    priorityBadge.setBackgroundColor(0xFF8E8E93);
+                    break;
                 default:
                     priorityBadge.setText("P3 普通");
                     priorityBadge.setBackgroundColor(ContextCompat.getColor(ctx, android.R.color.darker_gray));

@@ -14,9 +14,19 @@ android {
         versionName = "3.0"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("release.keystore")
+            storePassword = "Tg2y+C=."
+            keyAlias = "TodoApp"
+            keyPassword = "Tg2y+C=."
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

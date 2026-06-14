@@ -176,6 +176,9 @@ TodoApp/
 🔄 TaskDao 新增 getAllTasksSortedByStartDate() 和 getActiveTasksSortedByStartDate()
 🛑 截止时间校验：设置截止时间不能早于开始时间
 📝 README 排序说明同步更新 |
+| v5.0 | 🆕 新增优先级模式选择（设置页），支持艾森豪威尔矩阵/高-中-低 两种模式
+🔄 任务详情页根据优先级模式动态切换 RadioGroup
+🎨 列表适配器支持简单优先级（高/中/低）颜色显示
 
 ## 构建与下载
 

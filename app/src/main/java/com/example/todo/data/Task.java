@@ -17,11 +17,16 @@ public class Task {
     public static final int PRIORITY_P1_IMPORTANT = 2;     // 重要但不紧急
     public static final int PRIORITY_P0_CRITICAL = 3;      // 重要且紧急
 
+    // 简单优先级（高/中/低）
+    public static final int PRIORITY_HIGH = 4;
+    public static final int PRIORITY_MEDIUM = 5;
+    public static final int PRIORITY_LOW = 6;
+
     // 状态常量
     public static final String STATUS_TODO = "todo";
     public static final String STATUS_DOING = "doing";
     public static final String STATUS_PLANNED = "planned";
-    public static final String STATUS_BLOCKED = "blocked";
+    public static final String STATUS_PAUSED = "paused";
     public static final String STATUS_DONE = "done";
 
     // 重复类型
@@ -148,6 +153,9 @@ public class Task {
             case PRIORITY_P0_CRITICAL: return "重要且紧急";
             case PRIORITY_P1_IMPORTANT: return "重要不紧急";
             case PRIORITY_P2_URGENT: return "紧急不重要";
+            case PRIORITY_HIGH: return "高优先级";
+            case PRIORITY_MEDIUM: return "中优先级";
+            case PRIORITY_LOW: return "低优先级";
             default: return "低优先级";
         }
     }
@@ -169,7 +177,7 @@ public class Task {
             case STATUS_TODO: return "待办";
             case STATUS_DOING: return "进行中";
             case STATUS_PLANNED: return "计划中";
-            case STATUS_BLOCKED: return "阻塞";
+            case STATUS_PAUSED: return "暂停";
             case STATUS_DONE: return "已完成";
             default: return "待办";
         }

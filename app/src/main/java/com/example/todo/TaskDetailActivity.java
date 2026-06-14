@@ -39,8 +39,8 @@ import java.util.Locale;
 public class TaskDetailActivity extends AppCompatActivity {
 
     private EditText titleInput, descInput, customTagInput;
-    private RadioGroup priorityGroup, statusGroup;
-    private TextView startDateText, dueDateText;
+    private RadioGroup priorityGroup, prioritySimpleGroup, statusGroup;
+    private TextView priorityEisenhowerLabel, prioritySimpleLabel, startDateText, dueDateText;
     private CheckBox syncCalendarCheck;
     private Spinner categorySpinner;
     private View startDateContainer, dueDateContainer;
@@ -50,12 +50,15 @@ public class TaskDetailActivity extends AppCompatActivity {
     private View attachmentContainer;
 
     private Task task;
-    private boolean isNewTask = true;
+
     private long selectedStartDate = 0;
     private long selectedDueDate = 0;
     private boolean syncToCalendar = false;
     private String attachmentPath = "";
     private String attachmentType = "";
+
+    private int priorityMode = ThemeUtil.PRIORITY_MODE_EISENHOWER;
+    private boolean isNewTask = true;
 
     private final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
 
@@ -77,6 +80,11 @@ public class TaskDetailActivity extends AppCompatActivity {
             isNewTask = taskId <= 0;
 
             initViews();
+
+            // 读取优先级模式
+            priorityMode = ThemeUtil.getPriorityMode(this);
+            applyPriorityMode();
+
             setupCategorySpinner();
 
             if (isNewTask) {
@@ -104,6 +112,9 @@ public class TaskDetailActivity extends AppCompatActivity {
         descInput = findViewById(R.id.descInput);
         customTagInput = findViewById(R.id.customTagInput);
         priorityGroup = findViewById(R.id.priorityGroup);
+        prioritySimpleGroup = findViewById(R.id.prioritySimpleGroup);
+        priorityEisenhowerLabel = findViewById(R.id.priorityEisenhowerLabel);
+        prioritySimpleLabel = findViewById(R.id.prioritySimpleLabel);
         statusGroup = findViewById(R.id.statusGroup);
         startDateText = findViewById(R.id.startDateText);
         startDateContainer = findViewById(R.id.startDateContainer);
@@ -121,6 +132,14 @@ public class TaskDetailActivity extends AppCompatActivity {
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
 
+    private void applyPriorityMode() {
+        boolean isEisenhower = (priorityMode == ThemeUtil.PRIORITY_MODE_EISENHOWER);
+        priorityGroup.setVisibility(isEisenhower ? View.VISIBLE : View.GONE);
+        priorityEisenhowerLabel.setVisibility(isEisenhower ? View.VISIBLE : View.GONE);
+        prioritySimpleGroup.setVisibility(isEisenhower ? View.GONE : View.VISIBLE);
+        prioritySimpleLabel.setVisibility(isEisenhower ? View.GONE : View.VISIBLE);
+    }
+
     private void setupCategorySpinner() {
         String[] categories = {"工作", "个人", "学习", "健身", "其他", "自定义"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categories);
@@ -131,19 +150,27 @@ public class TaskDetailActivity extends AppCompatActivity {
         titleInput.setText(task.getTitle());
         descInput.setText(task.getDescription());
 
-        // Priority
-        switch (task.getPriority()) {
-            case Task.PRIORITY_P0_CRITICAL: priorityGroup.check(R.id.radioP0); break;
-            case Task.PRIORITY_P1_IMPORTANT: priorityGroup.check(R.id.radioP1); break;
-            case Task.PRIORITY_P2_URGENT: priorityGroup.check(R.id.radioP2); break;
-            default: priorityGroup.check(R.id.radioP3); break;
+        // Priority - 根据模式恢复
+        if (priorityMode == ThemeUtil.PRIORITY_MODE_EISENHOWER) {
+            switch (task.getPriority()) {
+                case Task.PRIORITY_P0_CRITICAL: priorityGroup.check(R.id.radioP0); break;
+                case Task.PRIORITY_P1_IMPORTANT: priorityGroup.check(R.id.radioP1); break;
+                case Task.PRIORITY_P2_URGENT: priorityGroup.check(R.id.radioP2); break;
+                default: priorityGroup.check(R.id.radioP3); break;
+            }
+        } else {
+            switch (task.getPriority()) {
+                case Task.PRIORITY_HIGH: prioritySimpleGroup.check(R.id.radioHigh); break;
+                case Task.PRIORITY_MEDIUM: prioritySimpleGroup.check(R.id.radioMedium); break;
+                default: prioritySimpleGroup.check(R.id.radioLow); break;
+            }
         }
 
         // Status
         switch (task.getStatus() != null ? task.getStatus() : "") {
             case Task.STATUS_DOING: statusGroup.check(R.id.statusDoing); break;
             case Task.STATUS_PLANNED: statusGroup.check(R.id.statusPlanned); break;
-            case Task.STATUS_BLOCKED: statusGroup.check(R.id.statusBlocked); break;
+            case Task.STATUS_PAUSED: statusGroup.check(R.id.statusPaused); break;
             case Task.STATUS_DONE: statusGroup.check(R.id.statusDone); break;
             default: statusGroup.check(R.id.statusTodo); break;
         }
@@ -344,18 +371,25 @@ public class TaskDetailActivity extends AppCompatActivity {
         task.setTitle(title);
         task.setDescription(descInput.getText().toString().trim());
 
-        // Priority
-        int checkedPriority = priorityGroup.getCheckedRadioButtonId();
-        if (checkedPriority == R.id.radioP0) task.setPriority(Task.PRIORITY_P0_CRITICAL);
-        else if (checkedPriority == R.id.radioP1) task.setPriority(Task.PRIORITY_P1_IMPORTANT);
-        else if (checkedPriority == R.id.radioP2) task.setPriority(Task.PRIORITY_P2_URGENT);
-        else task.setPriority(Task.PRIORITY_P3_LOW);
+        // Priority - 根据当前模式
+        if (priorityMode == ThemeUtil.PRIORITY_MODE_EISENHOWER) {
+            int checkedPriority = priorityGroup.getCheckedRadioButtonId();
+            if (checkedPriority == R.id.radioP0) task.setPriority(Task.PRIORITY_P0_CRITICAL);
+            else if (checkedPriority == R.id.radioP1) task.setPriority(Task.PRIORITY_P1_IMPORTANT);
+            else if (checkedPriority == R.id.radioP2) task.setPriority(Task.PRIORITY_P2_URGENT);
+            else task.setPriority(Task.PRIORITY_P3_LOW);
+        } else {
+            int checkedSimple = prioritySimpleGroup.getCheckedRadioButtonId();
+            if (checkedSimple == R.id.radioHigh) task.setPriority(Task.PRIORITY_HIGH);
+            else if (checkedSimple == R.id.radioMedium) task.setPriority(Task.PRIORITY_MEDIUM);
+            else task.setPriority(Task.PRIORITY_LOW);
+        }
 
         // Status
         int checkedStatus = statusGroup.getCheckedRadioButtonId();
         if (checkedStatus == R.id.statusDoing) task.setStatus(Task.STATUS_DOING);
         else if (checkedStatus == R.id.statusPlanned) task.setStatus(Task.STATUS_PLANNED);
-        else if (checkedStatus == R.id.statusBlocked) task.setStatus(Task.STATUS_BLOCKED);
+        else if (checkedStatus == R.id.statusPaused) task.setStatus(Task.STATUS_PAUSED);
         else if (checkedStatus == R.id.statusDone) { task.setStatus(Task.STATUS_DONE); task.setCompleted(true); }
         else task.setStatus(Task.STATUS_TODO);
 
