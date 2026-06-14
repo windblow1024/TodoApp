@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">待办事项</string>
+    <string name="app_name">待办清单</string>
     <string name="tab_all">全部</string>
     <string name="tab_active">待办</string>
     <string name="tab_completed">已完成</string>
-    <string name="empty_all">还没有待办事项\n点击 + 添加</string>
-    <string name="empty_active">没有待办事项 🎉</string>
+    <string name="empty_all">还没有待办清单\n点击 + 添加</string>
+    <string name="empty_active">没有待办清单 🎉</string>
     <string name="empty_completed">还没有已完成的任务</string>
 </resources>
