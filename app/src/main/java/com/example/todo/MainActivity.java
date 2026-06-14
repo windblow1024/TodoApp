@@ -149,10 +149,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupMenuButtons() {
+        findViewById(R.id.sortButton).setOnClickListener(v -> showSortDialog());
         findViewById(R.id.dashboardButton).setOnClickListener(v ->
                 startActivity(new Intent(this, DashboardActivity.class)));
         findViewById(R.id.settingsButton).setOnClickListener(v ->
                 startActivity(new Intent(this, SettingsActivity.class)));
+    }
+
+    private void showSortDialog() {
+        String[] options = {"按创建时间", "按截止日期", "按优先级"};
+        int checkedItem = currentSort.equals("due") ? 1 : currentSort.equals("priority") ? 2 : 0;
+        new AlertDialog.Builder(this)
+                .setTitle("排序方式")
+                .setSingleChoiceItems(options, checkedItem, (dialog, which) -> {
+                    switch (which) {
+                        case 0: currentSort = "created"; break;
+                        case 1: currentSort = "due"; break;
+                        case 2: currentSort = "priority"; break;
+                    }
+                    dialog.dismiss();
+                    loadTasks();
+                })
+                .show();
     }
 
     private void setupObservers() {
