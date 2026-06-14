@@ -258,19 +258,40 @@ public class TaskDetailActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         if (selectedDueDate > 0) cal.setTimeInMillis(selectedDueDate);
 
-        new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
+        // 限制截止日期不能早于开始日期
+        long minDate = selectedStartDate > 0 ? selectedStartDate : System.currentTimeMillis();
+        if (cal.getTimeInMillis() < minDate) {
+            cal.setTimeInMillis(minDate);
+        }
+
+        DatePickerDialog datePicker = new DatePickerDialog(this, (view, year, month, dayOfMonth) -> {
             cal.set(Calendar.YEAR, year);
             cal.set(Calendar.MONTH, month);
             cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            // 如果选择的日期小于开始日期，弹出提示
+            if (selectedStartDate > 0 && cal.getTimeInMillis() < selectedStartDate) {
+                Toast.makeText(this, "截止时间不能早于开始时间", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             new TimePickerDialog(this, (view1, hourOfDay, minute) -> {
                 cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
                 cal.set(Calendar.MINUTE, minute);
                 cal.set(Calendar.SECOND, 0);
+
+                if (selectedStartDate > 0 && cal.getTimeInMillis() <= selectedStartDate) {
+                    Toast.makeText(this, "截止时间必须晚于开始时间", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 selectedDueDate = cal.getTimeInMillis();
                 dueDateText.setText(dateTimeFormat.format(selectedDueDate));
             }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show();
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+
+        // 设置最小可选日期
+        datePicker.getDatePicker().setMinDate(minDate);
     }
 
     private void handleAttachment(Uri uri) {

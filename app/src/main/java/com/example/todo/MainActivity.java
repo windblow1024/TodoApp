@@ -163,13 +163,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showSortDialog() {
-        String[] options = {"按创建时间", "按截止日期", "按优先级"};
+        String[] options = {"按开始时间", "按截止时间", "按优先级"};
         int checkedItem = currentSort.equals("due") ? 1 : currentSort.equals("priority") ? 2 : 0;
         new AlertDialog.Builder(this)
                 .setTitle("排序方式")
                 .setSingleChoiceItems(options, checkedItem, (dialog, which) -> {
                     switch (which) {
-                        case 0: currentSort = "created"; break;
+                        case 0: currentSort = "start"; break;
                         case 1: currentSort = "due"; break;
                         case 2: currentSort = "priority"; break;
                     }
@@ -192,6 +192,10 @@ public class MainActivity extends AppCompatActivity {
             liveData = dao.searchTasks("%" + searchQuery + "%");
         } else {
             switch (currentSort) {
+                case "start":
+                    liveData = currentTab == 0 ? dao.getAllTasksSortedByStartDate()
+                            : currentTab == 1 ? dao.getActiveTasksSortedByStartDate() : dao.getCompletedTasks();
+                    break;
                 case "due":
                     liveData = currentTab == 0 ? dao.getAllTasksSortedByDueDate()
                             : currentTab == 1 ? dao.getActiveTasksSortedByDueDate() : dao.getCompletedTasks();

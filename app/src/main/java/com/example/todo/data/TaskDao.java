@@ -44,6 +44,12 @@ public interface TaskDao {
     @Query("SELECT * FROM tasks ORDER BY priority DESC, created_at DESC")
     LiveData<List<Task>> getAllTasksSortedByPriority();
 
+    @Query("SELECT * FROM tasks ORDER BY start_date ASC")
+    LiveData<List<Task>> getAllTasksSortedByStartDate();
+
+    @Query("SELECT * FROM tasks WHERE completed = 0 ORDER BY start_date ASC")
+    LiveData<List<Task>> getActiveTasksSortedByStartDate();
+
     @Query("SELECT * FROM tasks ORDER BY due_date ASC")
     LiveData<List<Task>> getAllTasksSortedByDueDate();
 
