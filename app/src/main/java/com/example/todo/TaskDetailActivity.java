@@ -357,8 +357,12 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         // Calendar sync
         if (syncToCalendar && selectedDueDate > 0) {
-            long eventId = CalendarHelper.syncTaskToCalendar(this, task);
-            if (eventId > 0) task.setCalendarEventId(eventId);
+            CalendarHelper.SyncResult result = CalendarHelper.syncTaskToCalendar(this, task);
+            if (result.success) {
+                task.setCalendarEventId(result.eventId);
+            } else {
+                Toast.makeText(this, "日历同步失败: " + result.message, Toast.LENGTH_LONG).show();
+            }
         } else if (!syncToCalendar && task.hasCalendarEvent()) {
             CalendarHelper.deleteEvent(this, task.getCalendarEventId());
             task.setCalendarEventId(0);
