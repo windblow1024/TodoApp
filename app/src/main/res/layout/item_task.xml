@@ -67,7 +67,7 @@
                     android:layout_marginTop="4dp"
                     android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
 
-                <!-- Time & Due -->
+                <!-- Time, Start & Due -->
                 <LinearLayout
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="2dp" android:orientation="horizontal">
@@ -76,9 +76,15 @@
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:textColor="?attr/colorOnSurface" android:textSize="11sp" />
 
+                    <TextView android:id="@+id/startDateText"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp" android:textSize="11sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:visibility="gone" />
+
                     <TextView android:id="@+id/dueDateText"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp" android:textSize="11sp"
+                        android:layout_marginStart="6dp" android:textSize="11sp"
                         android:visibility="gone" />
                 </LinearLayout>
             </LinearLayout>

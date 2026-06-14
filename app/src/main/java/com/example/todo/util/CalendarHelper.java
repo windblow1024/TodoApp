@@ -142,7 +142,7 @@ public class CalendarHelper {
     /**
      * 创建日历事件，返回详细结果
      */
-    public static SyncResult createEvent(Context context, String title, long dueDateMillis) {
+    public static SyncResult createEvent(Context context, String title, long startMillis, long endMillis) {
         try {
             // 权限检查
             if (!hasCalendarPermission(context)) {
@@ -154,14 +154,25 @@ public class CalendarHelper {
                 return SyncResult.fail("无法获取或创建日历，请检查系统日历是否存在");
             }
 
+            // 如果没有开始时间，用截止时间减1小时；如果都没有，无法同步
+            if (startMillis <= 0 && endMillis <= 0) {
+                return SyncResult.fail("没有设置开始或截止时间，无法同步到日历");
+            }
+            if (startMillis <= 0) {
+                startMillis = endMillis - 3600000;
+            }
+            if (endMillis <= 0) {
+                endMillis = startMillis + 3600000;
+            }
+
             ContentResolver cr = context.getContentResolver();
             ContentValues values = new ContentValues();
-            values.put(CalendarContract.Events.DTSTART, dueDateMillis);
-            values.put(CalendarContract.Events.DTEND, dueDateMillis + 3600000);
+            values.put(CalendarContract.Events.DTSTART, startMillis);
+            values.put(CalendarContract.Events.DTEND, endMillis);
             values.put(CalendarContract.Events.TITLE, title);
             values.put(CalendarContract.Events.DESCRIPTION, "来自待办事项 App");
             values.put(CalendarContract.Events.CALENDAR_ID, calId);
-            values.put(CalendarContract.Events.EVENT_TIMEZONE, "Asia/Shanghai");
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
             values.put(CalendarContract.Events.ALL_DAY, 0);
             values.put(CalendarContract.Events.STATUS, CalendarContract.Events.STATUS_CONFIRMED);
 
@@ -194,15 +205,19 @@ public class CalendarHelper {
         }
     }
 
-    public static boolean updateEvent(Context context, long eventId, String title, long dueDateMillis) {
+    public static boolean updateEvent(Context context, long eventId, String title, long startMillis, long endMillis) {
         if (eventId <= 0) return false;
         try {
+            if (startMillis <= 0 && endMillis <= 0) return false;
+            if (startMillis <= 0) startMillis = endMillis - 3600000;
+            if (endMillis <= 0) endMillis = startMillis + 3600000;
+
             ContentResolver cr = context.getContentResolver();
             ContentValues values = new ContentValues();
-            values.put(CalendarContract.Events.DTSTART, dueDateMillis);
-            values.put(CalendarContract.Events.DTEND, dueDateMillis + 3600000);
+            values.put(CalendarContract.Events.DTSTART, startMillis);
+            values.put(CalendarContract.Events.DTEND, endMillis);
             values.put(CalendarContract.Events.TITLE, title);
-            values.put(CalendarContract.Events.EVENT_TIMEZONE, "Asia/Shanghai");
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
 
             Uri uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId);
             int rows = cr.update(uri, values, null, null);
@@ -230,19 +245,22 @@ public class CalendarHelper {
      * 同步任务到日历，返回详细结果
      */
     public static SyncResult syncTaskToCalendar(Context context, Task task) {
-        if (!task.hasDueDate()) {
-            return SyncResult.fail("没有设置截止日期，无法同步到日历");
+        long startMillis = task.getStartDate();
+        long endMillis = task.getDueDate();
+
+        if (startMillis <= 0 && endMillis <= 0) {
+            return SyncResult.fail("没有设置开始或截止时间，无法同步到日历");
         }
 
         if (task.hasCalendarEvent()) {
-            boolean updated = updateEvent(context, task.getCalendarEventId(), task.getTitle(), task.getDueDate());
+            boolean updated = updateEvent(context, task.getCalendarEventId(), task.getTitle(), startMillis, endMillis);
             if (updated) {
                 return SyncResult.ok(task.getCalendarEventId());
             } else {
                 return SyncResult.fail("更新日历事件失败");
             }
         } else {
-            return createEvent(context, task.getTitle(), task.getDueDate());
+            return createEvent(context, task.getTitle(), startMillis, endMillis);
         }
     }
 

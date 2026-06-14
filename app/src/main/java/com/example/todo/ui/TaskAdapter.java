@@ -75,6 +75,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         TextView timeText;
         TextView priorityBadge;
         TextView categoryBadge;
+        TextView startDateText;
         TextView dueDateText;
         TextView statusText;
         ImageButton deleteButton;
@@ -94,6 +95,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             titleText = itemView.findViewById(R.id.titleText);
             timeText = itemView.findViewById(R.id.timeText);
             priorityBadge = itemView.findViewById(R.id.priorityBadge);
+            startDateText = itemView.findViewById(R.id.startDateText);
             categoryBadge = itemView.findViewById(R.id.categoryBadge);
             dueDateText = itemView.findViewById(R.id.dueDateText);
             statusText = itemView.findViewById(R.id.statusText);
@@ -133,6 +135,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             // Status
             statusText.setText(task.getStatusLabel());
             statusText.setVisibility(View.VISIBLE);
+
+            // Start date
+            if (task.hasStartDate()) {
+                startDateText.setVisibility(View.VISIBLE);
+                startDateText.setText("开始 " + dateFormat.format(new Date(task.getStartDate())));
+            } else {
+                startDateText.setVisibility(View.GONE);
+            }
 
             // Due date
             if (task.hasDueDate()) {
