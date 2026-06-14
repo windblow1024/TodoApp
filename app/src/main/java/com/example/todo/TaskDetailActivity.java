@@ -355,15 +355,16 @@ public class TaskDetailActivity extends AppCompatActivity {
         task.setAttachmentPath(attachmentPath);
         task.setAttachmentType(attachmentType);
 
-        // Calendar sync
-        if (syncToCalendar && selectedDueDate > 0) {
+        // Calendar sync - read from checkbox directly
+        boolean shouldSync = syncCalendarCheck.isChecked();
+        if (shouldSync && selectedDueDate > 0) {
             CalendarHelper.SyncResult result = CalendarHelper.syncTaskToCalendar(this, task);
             if (result.success) {
                 task.setCalendarEventId(result.eventId);
             } else {
                 Toast.makeText(this, "日历同步失败: " + result.message, Toast.LENGTH_LONG).show();
             }
-        } else if (!syncToCalendar && task.hasCalendarEvent()) {
+        } else if (!shouldSync && task.hasCalendarEvent()) {
             CalendarHelper.deleteEvent(this, task.getCalendarEventId());
             task.setCalendarEventId(0);
         }

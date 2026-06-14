@@ -91,27 +91,17 @@ public class CalendarHelper {
         String[] calProjection = {
                 CalendarContract.Calendars._ID,
                 CalendarContract.Calendars.ACCOUNT_NAME,
-                CalendarContract.Calendars.ACCOUNT_TYPE
+                CalendarContract.Calendars.ACCOUNT_TYPE,
+                CalendarContract.Calendars.CALENDAR_DISPLAY_NAME
         };
         try (Cursor cursor = cr.query(
                 CalendarContract.Calendars.CONTENT_URI,
                 calProjection, null, null, null)) {
             if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    long calId = cursor.getLong(0);
-                    String accountName = cursor.getString(1);
-                    String accountType = cursor.getString(2);
-                    // 优先用本地日历或小米日历
-                    if (accountType != null && (accountType.contains("local") || accountType.contains("miui"))) {
-                        cachedCalendarId = calId;
-                        Log.d(TAG, "Using system calendar: " + accountName + " (" + accountType + ")");
-                        return cachedCalendarId;
-                    }
-                } while (cursor.moveToNext());
-                // 如果没找到 local/miui，用第一个可用日历
-                cursor.moveToFirst();
+                // 直接用第一个可用的日历（几乎所有系统都有默认日历）
                 cachedCalendarId = cursor.getLong(0);
-                Log.d(TAG, "Using first available calendar: " + cachedCalendarId);
+                String displayName = cursor.getString(3);
+                Log.d(TAG, "Using existing calendar: " + displayName + " (id=" + cachedCalendarId + ")");
                 return cachedCalendarId;
             }
         } catch (Exception e) {
