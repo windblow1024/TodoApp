@@ -47,6 +47,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     private ImageView attachmentPreview;
     private TextView deleteAttachmentBtn;
     private Button saveButton, deleteButton, attachButton;
+    private LinearLayout buttonContainer;
     private View attachmentContainer;
 
     private Task task;
@@ -80,14 +81,6 @@ public class TaskDetailActivity extends AppCompatActivity {
             isNewTask = taskId <= 0;
 
             initViews();
-
-            // 新建时 saveButton 占满宽度
-            if (isNewTask) {
-                LinearLayout.LayoutParams saveParams = (LinearLayout.LayoutParams) saveButton.getLayoutParams();
-                saveParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
-                saveParams.weight = 0;
-                saveButton.setLayoutParams(saveParams);
-            }
 
             // 读取优先级模式
             priorityMode = ThemeUtil.getPriorityMode(this);
@@ -136,6 +129,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         deleteAttachmentBtn = findViewById(R.id.deleteAttachmentBtn);
         saveButton = findViewById(R.id.saveButton);
         deleteButton = findViewById(R.id.deleteButton);
+        buttonContainer = findViewById(R.id.buttonContainer);
 
         findViewById(R.id.backButton).setOnClickListener(v -> finish());
     }
@@ -220,8 +214,12 @@ public class TaskDetailActivity extends AppCompatActivity {
             showAttachmentPreview();
         }
 
+        // 编辑时：删除按钮可见，两个按钮 weight 均分
         deleteButton.setVisibility(View.VISIBLE);
-        // 编辑时恢复 saveButton 为 weight 均分
+        LinearLayout.LayoutParams delParams = (LinearLayout.LayoutParams) deleteButton.getLayoutParams();
+        delParams.width = 0;
+        delParams.weight = 1;
+        deleteButton.setLayoutParams(delParams);
         LinearLayout.LayoutParams saveParams = (LinearLayout.LayoutParams) saveButton.getLayoutParams();
         saveParams.width = 0;
         saveParams.weight = 1;
