@@ -14,6 +14,7 @@
         android:text="设置" android:textColor="?attr/colorOnSurface"
         android:textSize="18sp" android:textStyle="bold" />
 
+    <!-- 深色模式 -->
     <LinearLayout
         android:layout_width="match_parent" android:layout_height="52dp"
         android:layout_marginTop="16dp"
@@ -25,15 +26,7 @@
             android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
         <Switch android:id="@+id/darkModeSwitch"
             android:layout_width="wrap_content" android:layout_height="wrap_content" />
-    
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:layout_marginTop="32dp" android:gravity="center"
-        android:text="待办清单 v1.0\n作者: 风吹吹\nE-mail: windblow78@qq.com"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="12sp"
-        android:alpha="0.6" />
-
-</LinearLayout>
+    </LinearLayout>
 
     <!-- 优先级模式 -->
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -51,6 +44,7 @@
             android:text="高/中/低" android:textColor="?attr/colorOnSurface" android:checked="true" />
     </RadioGroup>
 
+    <!-- 主题色 -->
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginTop="24dp" android:text="主题色"
         android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
@@ -72,10 +66,10 @@
             android:text="橙色" android:textColor="?attr/colorOnSurface" />
     </RadioGroup>
 
-
+    <!-- 版权信息 -->
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_marginTop="32dp" android:gravity="center"
-        android:text="待办清单 v1.0\n作者: 风吹吹\nE-mail: windblow78@qq.com"
+        android:text="待办清单 v1.0&#10;作者: 风吹吹&#10;E-mail: windblow78@qq.com"
         android:textColor="?attr/colorOnSurface"
         android:textSize="12sp"
         android:alpha="0.6" />
