@@ -85,13 +85,13 @@
 
             <RadioButton android:id="@+id/radioHigh" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
-                android:text="🔴 高" android:textColor="#FF3B30" android:checked="true" />
+                android:text="🔴 高" android:textColor="#FF3B30" />
             <RadioButton android:id="@+id/radioMedium" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:text="🟡 中" android:textColor="#FF9500" />
             <RadioButton android:id="@+id/radioLow" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
-                android:text="⚪ 低" android:textColor="#8E8E93" />
+                android:text="⚪ 低" android:textColor="#8E8E93" android:checked="true" />
         </RadioGroup>
 
         <!-- Status -->
