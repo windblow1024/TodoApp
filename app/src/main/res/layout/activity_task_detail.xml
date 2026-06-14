@@ -47,7 +47,8 @@
             android:hint="添加备注、URL 链接…" />
 
         <!-- Priority (Eisenhower Matrix) -->
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        <TextView android:id="@+id/priorityEisenhowerLabel"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_marginTop="16dp" android:text="优先级 (艾森豪威尔矩阵)"
             android:textColor="?attr/colorOnSurface" android:textSize="13sp" />
 
@@ -68,6 +69,29 @@
                 android:layout_height="wrap_content"
                 android:text="P3 ⚪ 低优先级" android:textColor="?attr/colorOnSurface"
                 android:checked="true" />
+        </RadioGroup>
+
+        <!-- Priority (Simple High/Medium/Low) -->
+        <TextView android:id="@+id/prioritySimpleLabel"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" android:text="优先级"
+            android:textColor="?attr/colorOnSurface" android:textSize="13sp"
+            android:visibility="gone" />
+
+        <RadioGroup android:id="@+id/prioritySimpleGroup"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="4dp" android:orientation="horizontal"
+            android:visibility="gone">
+
+            <RadioButton android:id="@+id/radioHigh" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="🔴 高" android:textColor="#FF3B30" android:checked="true" />
+            <RadioButton android:id="@+id/radioMedium" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="🟡 中" android:textColor="#FF9500" />
+            <RadioButton android:id="@+id/radioLow" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:text="⚪ 低" android:textColor="#8E8E93" />
         </RadioGroup>
 
         <!-- Status -->

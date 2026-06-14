@@ -27,6 +27,22 @@
             android:layout_width="wrap_content" android:layout_height="wrap_content" />
     </LinearLayout>
 
+    <!-- 优先级模式 -->
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:text="优先级模式"
+        android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
+
+    <RadioGroup android:id="@+id/priorityModeGroup"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioPriorityEisenhower" android:layout_width="0dp"
+            android:layout_height="wrap_content" android:layout_weight="1"
+            android:text="艾森豪威尔矩阵" android:textColor="?attr/colorOnSurface" />
+        <RadioButton android:id="@+id/radioPrioritySimple" android:layout_width="0dp"
+            android:layout_height="wrap_content" android:layout_weight="1"
+            android:text="高/中/低" android:textColor="?attr/colorOnSurface" android:checked="true" />
+    </RadioGroup>
+
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginTop="24dp" android:text="主题色"
         android:textColor="?attr/colorOnSurface" android:textSize="14sp" />
