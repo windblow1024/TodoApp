@@ -24,19 +24,18 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-
-      - name: Download gradle-wrapper.jar
-        run: |
-          curl -sL -o gradle/wrapper/gradle-wrapper.jar "https://github.com/gradle/gradle/releases/download/v8.5.0/gradle-8.5-wrapper.jar"
-          ls -lh gradle/wrapper/gradle-wrapper.jar
-
       - name: Decode keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
           echo "$KEYSTORE_BASE64" | base64 -d > release.keystore
+
+      - name: Generate Gradle Wrapper
+        run: |
+          gradle wrapper --gradle-version=8.5
+        env:
+          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Build Release APK
         run: ./gradlew assembleRelease
