@@ -25,7 +25,15 @@
             android:textColor="?attr/colorOnSurface" android:textSize="16sp" />
         <Switch android:id="@+id/darkModeSwitch"
             android:layout_width="wrap_content" android:layout_height="wrap_content" />
-    </LinearLayout>
+    
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="32dp" android:gravity="center"
+        android:text="待办清单 v1.0\n作者: 风吹吹\nE-mail: windblow78@qq.com"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="12sp"
+        android:alpha="0.6" />
+
+</LinearLayout>
 
     <!-- 优先级模式 -->
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -63,5 +71,13 @@
             android:layout_height="wrap_content" android:layout_weight="1"
             android:text="橙色" android:textColor="?attr/colorOnSurface" />
     </RadioGroup>
+
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="32dp" android:gravity="center"
+        android:text="待办清单 v1.0\n作者: 风吹吹\nE-mail: windblow78@qq.com"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="12sp"
+        android:alpha="0.6" />
 
 </LinearLayout>

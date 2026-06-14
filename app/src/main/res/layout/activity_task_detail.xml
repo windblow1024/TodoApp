@@ -112,9 +112,9 @@
             <RadioButton android:id="@+id/statusPlanned" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:text="计划中" android:textColor="?attr/colorOnSurface" />
-            <RadioButton android:id="@+id/statusBlocked" android:layout_width="0dp"
+            <RadioButton android:id="@+id/statusPaused" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
-                android:text="阻塞" android:textColor="?attr/colorOnSurface" />
+                android:text="暂停" android:textColor="?attr/colorOnSurface" />
             <RadioButton android:id="@+id/statusDone" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1"
                 android:text="已完成" android:textColor="?attr/colorOnSurface" />

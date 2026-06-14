@@ -30,6 +30,9 @@ public class SettingsActivity extends AppCompatActivity {
         darkModeSwitch.setChecked(prefs.getBoolean("dark_mode", false));
 
         int currentTheme = prefs.getInt("theme_color", ThemeUtil.THEME_BLUE);
+        int priorityMode = prefs.getInt("priority_mode", ThemeUtil.PRIORITY_MODE_SIMPLE);
+        if (priorityMode == ThemeUtil.PRIORITY_MODE_SIMPLE) findViewById(R.id.radioPrioritySimple);
+        else findViewById(R.id.radioPriorityEisenhower);
         switch (currentTheme) {
             case ThemeUtil.THEME_GREEN: themeGroup.check(R.id.radioGreen); break;
             case ThemeUtil.THEME_PURPLE: themeGroup.check(R.id.radioPurple); break;

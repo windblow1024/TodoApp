@@ -170,7 +170,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         switch (task.getStatus() != null ? task.getStatus() : "") {
             case Task.STATUS_DOING: statusGroup.check(R.id.statusDoing); break;
             case Task.STATUS_PLANNED: statusGroup.check(R.id.statusPlanned); break;
-            case Task.STATUS_BLOCKED: statusGroup.check(R.id.statusBlocked); break;
+            case Task.STATUS_PAUSED: statusGroup.check(R.id.statusPaused); break;
             case Task.STATUS_DONE: statusGroup.check(R.id.statusDone); break;
             default: statusGroup.check(R.id.statusTodo); break;
         }
@@ -389,7 +389,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         int checkedStatus = statusGroup.getCheckedRadioButtonId();
         if (checkedStatus == R.id.statusDoing) task.setStatus(Task.STATUS_DOING);
         else if (checkedStatus == R.id.statusPlanned) task.setStatus(Task.STATUS_PLANNED);
-        else if (checkedStatus == R.id.statusBlocked) task.setStatus(Task.STATUS_BLOCKED);
+        else if (checkedStatus == R.id.statusPaused) task.setStatus(Task.STATUS_PAUSED);
         else if (checkedStatus == R.id.statusDone) { task.setStatus(Task.STATUS_DONE); task.setCompleted(true); }
         else task.setStatus(Task.STATUS_TODO);
 

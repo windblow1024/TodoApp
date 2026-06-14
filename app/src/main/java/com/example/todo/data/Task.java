@@ -26,7 +26,7 @@ public class Task {
     public static final String STATUS_TODO = "todo";
     public static final String STATUS_DOING = "doing";
     public static final String STATUS_PLANNED = "planned";
-    public static final String STATUS_BLOCKED = "blocked";
+    public static final String STATUS_PAUSED = "paused";
     public static final String STATUS_DONE = "done";
 
     // 重复类型
@@ -177,7 +177,7 @@ public class Task {
             case STATUS_TODO: return "待办";
             case STATUS_DOING: return "进行中";
             case STATUS_PLANNED: return "计划中";
-            case STATUS_BLOCKED: return "阻塞";
+            case STATUS_PAUSED: return "暂停";
             case STATUS_DONE: return "已完成";
             default: return "待办";
         }
